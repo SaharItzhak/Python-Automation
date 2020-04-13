@@ -53,8 +53,7 @@ if __name__ == '__main__':
     while word != '0':
         translate()
         word = input("Please enter word in Hebrew to translate or 0 to exit \n")
-        
-        
 
     driver.quit()
     print("Thank You!")
+
