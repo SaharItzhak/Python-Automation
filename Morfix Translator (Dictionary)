@@ -1,0 +1,52 @@
+
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+
+def valid_text():
+    for i in word:
+        if i.isdigit():
+            return False
+    return True
+
+
+def translate():
+    try:
+        if not valid_text() or len(word) == 0:
+            print("Bad input")
+            return
+
+        driver = webdriver.Chrome(executable_path="C:\Webdrivers\chromedriver.exe")
+        driver.get("https://www.morfix.co.il/")
+        driver.implicitly_wait(5)
+
+        driver.find_element(By.ID, "searchField").send_keys(word)
+        driver.find_element(By.ID, "searchField").send_keys(Keys.ENTER)
+
+        delay = 10
+        WebDriverWait(driver, delay).until(EC.presence_of_all_elements_located)
+        tran = driver.find_elements_by_class_name("Translation_spTop_heToen")
+        defi = driver.find_elements_by_class_name("normal_translation_div")
+        if len(tran) is 0 or len(defi) is 0:
+            print("No translation available")
+            return
+        [print(tran[i].text + ':' + '\n' + defi[i].text) for i in range(len(tran))]
+        time.sleep(1)
+
+        driver.quit()
+
+    except TimeoutError:
+        print("Timeout error")
+
+
+if __name__ == '__main__':
+    word = input("Please enter word in Hebrew to translate or 0 to exit \n")
+    while word != '0':
+        translate()
+        word = input("Please enter word in Hebrew to translate or 0 to exit \n")
+
+    print("Thank You!")
