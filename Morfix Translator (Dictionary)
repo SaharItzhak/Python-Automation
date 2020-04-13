@@ -3,8 +3,8 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 driver = webdriver.Chrome(executable_path="C:\Webdrivers\chromedriver.exe")
@@ -53,6 +53,8 @@ if __name__ == '__main__':
     while word != '0':
         translate()
         word = input("Please enter word in Hebrew to translate or 0 to exit \n")
+        
+        
 
     driver.quit()
     print("Thank You!")
