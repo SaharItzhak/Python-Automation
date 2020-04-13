@@ -7,6 +7,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
+driver = webdriver.Chrome(executable_path="C:\Webdrivers\chromedriver.exe")
+
+
 def valid_text():
     for i in word:
         if i.isdigit():
@@ -20,13 +23,10 @@ def translate():
             print("Bad input")
             return
 
-        driver = webdriver.Chrome(executable_path="C:\Webdrivers\chromedriver.exe")
-        driver.get("https://www.morfix.co.il/")
-        driver.implicitly_wait(5)
-
         driver.find_element(By.ID, "searchField").send_keys(word)
         driver.find_element(By.ID, "searchField").send_keys(Keys.ENTER)
 
+        time.sleep(2)
         delay = 10
         WebDriverWait(driver, delay).until(EC.presence_of_all_elements_located)
         tran = driver.find_elements_by_class_name("Translation_spTop_heToen")
@@ -35,18 +35,24 @@ def translate():
             print("No translation available")
             return
         [print(tran[i].text + ':' + '\n' + defi[i].text) for i in range(len(tran))]
+        print("=====================================================")
         time.sleep(1)
-
-        driver.quit()
 
     except TimeoutError:
         print("Timeout error")
 
 
+def open_site():
+    driver.get("https://www.morfix.co.il/")
+    driver.implicitly_wait(5)
+
+
 if __name__ == '__main__':
+    open_site()
     word = input("Please enter word in Hebrew to translate or 0 to exit \n")
     while word != '0':
         translate()
         word = input("Please enter word in Hebrew to translate or 0 to exit \n")
 
+    driver.quit()
     print("Thank You!")
