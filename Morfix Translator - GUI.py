@@ -75,7 +75,8 @@ edit_menu = Menu(menu)
 menu.add_cascade(label="Edit", menu=edit_menu)
 edit_menu.add_command(label="Inside Edit", command=lambda: print("INSIDE EDIT"))
 
-bg_img = PhotoImage(file="logo10.png")
+# BACKGROUND IMAGE
+# bg_img = PhotoImage(file="logo10.png")
 Label(root, image=bg_img).place(relwidth=1, relheight=1)
 Label(root, text="Enter a word in Hebrew to translate").pack()
 input_box = Entry(root)
