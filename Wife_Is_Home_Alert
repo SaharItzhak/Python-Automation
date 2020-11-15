@@ -1,0 +1,23 @@
+"""Notify when someone connects to your network to let you know whe came home! 🏠"""
+
+from decouple import config
+import subprocess
+import sys
+import os
+
+IP_NETWORK = config("IP_NETWORK")
+IP_DEVICE = config("IP_DEVICE")
+
+proc = subprocess.Popen(["ping", IP_NETWORK], stdout=subprocess.PIPE)
+
+while True:
+    line = proc.stdout.readline()
+    if not line:
+        break
+    connected_ip = line.decode("utf-8").split()[3]
+
+    if connected_ip == IP_DEVICE:
+        subprocess.Popen(["say", "Wife just connected to the network!"])
+
+    # Can also use "ime.sleep()"
+
